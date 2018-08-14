@@ -1,19 +1,33 @@
 import Immutable from 'seamless-immutable';
 
 const initialState = Immutable({
+    domains: [],
     icecatProducts: [],
+    selectedLocale: undefined,
+    selectedDomain: undefined,
     selectedProduct: undefined     
 });
 
 export default function reduce(state = initialState, action = {}) {
     switch (action.type) {
+        case 'FETCH_DOMAINS': {
+            // console.log("reducer", action.domainsArray);
+            return state.merge({
+                domains: action.domainsArray                
+            })
+        }      
         case 'FETCH_PRODUCTS':{
             // console.log("reducer", action.productsData);
             return state.merge({
                 icecatProducts: action.productsData
-                //, productIds: action.productsData.map(p => p.PRODUCT_ID)
             })            
         }        
+        case 'SELECTED_LOCALE': {
+            return state.merge({ selectedLocale: action.locale })
+        }
+        case 'SELECTED_DOMAIN': {
+            return state.merge({ selectedDomain: action.domain })
+        }
         case 'SELECTED_PROD': {
             return state.merge({selectedProduct: action.product})
         }
@@ -27,8 +41,16 @@ export function getProducts(state){
     return state.products.icecatProducts;
 }
 
-export function getProductIdArray(state) {
-    return state.productIds;
+export function getSelectedLocale(state) {
+    return state.products.selectedLocale;
+}
+
+export function getDomainList(state) {
+    return state.products.domains;
+}
+
+export function getSelectedDomain(state) {
+    return state.products.selectedDomain;
 }
 
 export function getSelectedProd(state) {

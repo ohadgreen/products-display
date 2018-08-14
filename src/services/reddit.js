@@ -5,6 +5,7 @@
 import _ from 'lodash';
 
 const REDDIT_ENDPOINT = 'https://www.reddit.com';
+const ICECAT_ENDPOINT = 'http://localhost:5000';
 
 class RedditService {
 
