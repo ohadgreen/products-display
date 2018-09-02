@@ -20,6 +20,21 @@ class IcecatService {
 
         return domainsArray;        
     }
+
+    async getProductsByDomain(domain) {
+        const url = `${ICECAT_ENDPOINT}/productsdata/${domain}`;
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json'
+            }
+        });
+        if (!response.ok) {
+            throw new Error(`Icecat service call for products data failed: ${response.status}`);
+        }
+        const data = await response.json();       
+        return data;
+    }
 }
 
 export default new IcecatService();

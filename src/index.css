@@ -3,3 +3,31 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+/* Post Styles */
+.products-container {
+background:#fff;
+padding:50px;
+width:50%;
+margin:40px auto;
+box-shadow:0 5px 15px 0 rgba(46, 61, 73, 0.12);
+font-family:'Work Sans',sans-serif;
+}
+
+.product_title {
+text-align:center;
+font-weight:400;
+font-size:20px;
+color:#636363;
+}
+
+.properties_table, tr, td {
+  border-collapse: collapse;
+  text-align: left;
+  vertical-align: top;
+  padding: 5px;
+}
+
+.prop_name_cell {
+  font-weight: bold
+}

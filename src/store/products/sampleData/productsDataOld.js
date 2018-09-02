@@ -1,4 +1,4 @@
-const productsData = [
+const productsDataOld = [
     {
         "PRODUCT_ID": "5849929",
         "PROPERTIES": [
@@ -33,4 +33,4 @@ const productsData = [
     }
 ]
 
-export default productsData;
+export default productsDataOld;

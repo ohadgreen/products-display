@@ -3,8 +3,9 @@ import Immutable from 'seamless-immutable';
 const initialState = Immutable({
     domains: [],
     icecatProducts: [],
+    productsData: [],
     selectedLocale: undefined,
-    selectedDomain: undefined,
+    selectedDomain: undefined,  
     selectedProduct: undefined     
 });
 
@@ -21,7 +22,12 @@ export default function reduce(state = initialState, action = {}) {
             return state.merge({
                 icecatProducts: action.productsData
             })            
-        }        
+        }  
+        case 'FETCH_PRODS_DATA': {
+            return state.merge({
+                productsData: action.productsData
+            })
+        }
         case 'SELECTED_LOCALE': {
             return state.merge({ selectedLocale: action.locale })
         }
@@ -39,6 +45,10 @@ export default function reduce(state = initialState, action = {}) {
 export function getProducts(state){
     // console.log("selector", state.products);
     return state.products.icecatProducts;
+}
+
+export function getSampleProductsData(state) {
+    return state.products.productsData;
 }
 
 export function getSelectedLocale(state) {

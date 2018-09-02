@@ -1,4 +1,5 @@
-import productsData from './productsData';
+// import productsDataOld from './sampleData/productsDataOld';
+import productsDataNew from './sampleData/productsDataNew';
 import IcecatService from '../../services/icecat';
 
 export function fetchDomains(locale) {
@@ -13,9 +14,28 @@ export function fetchDomains(locale) {
     };
 }
 
+export function fetchSampleProductsFromFile() {    
+    const productsData = productsDataNew;
+    return (dispatch) => {
+        dispatch({ type: 'FETCH_PRODS_DATA', productsData });
+    };
+}
+
+export function fetchSampleProductsFromDb(domain) {
+    console.log("locale action: ", domain);
+    return async (dispatch, getState) => {
+        try {
+            const productsData = await IcecatService.getProductsByDomain(domain.value);
+            dispatch({ type: 'FETCH_PRODS_DATA', productsData });
+        } catch (error) {
+            console.error(error);
+        }
+    };
+}
+
 export function fetchProducts() {
     return (dispatch) => {
-        dispatch({ type: 'FETCH_PRODUCTS', productsData });
+        dispatch({ type: 'FETCH_PRODUCTS', productsDataNew });
     };
 }
 
