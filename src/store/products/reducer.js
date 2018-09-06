@@ -29,7 +29,10 @@ export default function reduce(state = initialState, action = {}) {
             })
         }
         case 'SELECTED_LOCALE': {
-            return state.merge({ selectedLocale: action.locale })
+            return state.merge({ 
+                    selectedLocale: action.locale, 
+                    selectedDomain: undefined, 
+                    domains: [] })
         }
         case 'SELECTED_DOMAIN': {
             return state.merge({ selectedDomain: action.domain })

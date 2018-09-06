@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import autoBind from 'react-autobind';
 import { connect } from 'react-redux';
-import Select from 'react-select';
 import VirtualizedSelect from 'react-virtualized-select';
 import _ from 'lodash';
-import { fetchDomains, selectLocale, selectDomain } from '../store/products/actions';
+import { fetchSampleProductsFromDb, fetchDomains, selectLocale, selectDomain } from '../store/products/actions';
 import * as productsData from '../store/products/reducer';
 import 'react-virtualized-select/styles.css';
 import 'react-virtualized/styles.css';
@@ -15,7 +14,7 @@ class DomainSelect extends Component {
         super(props);
         autoBind(this);
     }
-    
+
     localeSelected(l) {
         this.props.dispatch(selectLocale(l));
         console.log("l from dropdown: ", l.value);
@@ -24,18 +23,18 @@ class DomainSelect extends Component {
     }
 
     domainSelected(d) {
-        this.props.dispatch(selectDomain(d));
-        if (this.props.selectedDomain !== undefined){
-            console.log("selected domain props: ", this.props.selectedDomain.value);             
+        if (d !== null) {
+            this.props.dispatch(selectDomain(d));
+            console.log(d.value);
+            this.props.dispatch(fetchSampleProductsFromDb(this.props.selectedLocale, d));
         }
     }
 
-    render() {        
-        return (                        
-            <div>
-                {this.renderSelectLocaleList()}                                                     
+    render() {
+        return (
+            <div className="domain_select">
                 {this.renderSelectDomainList()}
-            </div>                       
+            </div>
         )
     }
 
@@ -45,47 +44,30 @@ class DomainSelect extends Component {
         );
     }
 
-    renderSelectLocaleList() {
-        const localeArray = ['US', 'EN', 'DE', 'FR', 'IT', 'ES'];
-        const localeForSelect = _.map(localeArray, v => ({ "value": v, "label": v }));
-        return (
-            <div>
-                <Select                    
-                    value={this.props.selectedLocale}
-                    onChange={this.localeSelected}
-                    options={localeForSelect}
-                    // style={{ width: "30%" }}
-                    autosize={"false"}
-                />
-            </div>);
-    }
-
-    renderSelectDomainList() {        
+    renderSelectDomainList() {
         const domainsForSelect = _.map(this.props.domainList, v => ({ "value": v, "label": v }));
         return (
             <div>
+                <label>Select Domain:</label>
                 <VirtualizedSelect
                     value={this.props.selectedDomain}
                     onChange={this.domainSelected}
                     options={domainsForSelect}
-                    style={{ width: "40%" }}
                 />
             </div>);
     }
 }
 
 function mapStateToProps(state) {
-    const selectedLocale = productsData.getSelectedLocale(state);    
-    const selectedDomain = productsData.getSelectedDomain(state);
-    const domainList = productsData.getDomainList(state);
-    
-    console.log("selected locale mstp ", selectedLocale);
+    let selectedLocale = productsData.getSelectedLocale(state);
+    let selectedDomain = productsData.getSelectedDomain(state);
+    let domainList = productsData.getDomainList(state);
     console.log("domains list mstp count ", domainList.length);
 
-    return {       
-        domainList: domainList,
+    return {
         selectedLocale: selectedLocale,
         selectedDomain: selectedDomain,
+        domainList: domainList,
     };
 }
 

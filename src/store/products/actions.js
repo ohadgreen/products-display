@@ -21,18 +21,19 @@ export function fetchSampleProductsFromFile() {
     };
 }
 
-export function fetchSampleProductsFromDb(domain) {
-    console.log("locale action: ", domain);
+export function fetchSampleProductsFromDb(locale, domain) {
+    console.log("fetch prods data action params: ", domain);
+    console.log(`locale: ${locale.value} - domain: ${domain.value}`);
     return async (dispatch, getState) => {
         try {
-            const productsData = await IcecatService.getProductsByDomain(domain.value);
+            const productsData = await IcecatService.getProductsByDomain(locale.value, domain.value);
             dispatch({ type: 'FETCH_PRODS_DATA', productsData });
         } catch (error) {
             console.error(error);
         }
     };
 }
-
+// sample data from file
 export function fetchProducts() {
     return (dispatch) => {
         dispatch({ type: 'FETCH_PRODUCTS', productsDataNew });

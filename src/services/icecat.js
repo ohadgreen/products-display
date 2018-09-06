@@ -21,8 +21,8 @@ class IcecatService {
         return domainsArray;        
     }
 
-    async getProductsByDomain(domain) {
-        const url = `${ICECAT_ENDPOINT}/productsdata/${domain}`;
+    async getProductsByDomain(locale, domain) {
+        const url = `${ICECAT_ENDPOINT}/productsdata/${locale}/${domain}`;
         const response = await fetch(url, {
             method: 'GET',
             headers: {
